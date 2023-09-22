@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.ricardo.exception.UnsupportedMathOperationException;
+
 @RestController
 public class MathController {
 	
@@ -12,7 +14,7 @@ public class MathController {
 			@PathVariable(value = "numberOne")String numberOne,
 			@PathVariable(value = "numberTwo")String numberTwo) throws Exception{
 		if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
-			throw new Exception();
+			throw new UnsupportedMathOperationException("Please set a numeric value to this operation");
 		}
 		return convertToDouble(numberOne) + convertToDouble(numberTwo);
 	}
