@@ -71,7 +71,6 @@ public class MathController {
 	@GetMapping(value = "/squaredRoot/{numberOne}")
 	public Double squaredRoot(
 			@PathVariable(value = "numberOne")String numberOne) throws Exception{
-		
 		if(!mathService.isNumeric(numberOne)) {
 			throw new UnsupportedMathOperationException();
 		} return mathService.squaredRoot(numberOne);
