@@ -1,29 +1,53 @@
 package br.com.ricardo.service;
 
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.List;
 import java.util.logging.Logger;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.ricardo.exception.ResourceNotFoundException;
 import br.com.ricardo.model.Person;
+import br.com.ricardo.repository.PersonRepository;
 
 @Service
 public class PersonService {
 	
-	private final AtomicLong counter = new AtomicLong();
 	private Logger logger = Logger.getLogger(PersonService.class.getName());
 	
-	public Person findById(String id) {
-		long idTest = counter.incrementAndGet();
-		
+	@Autowired
+	PersonRepository repository;
+	
+	public Person findById(Long id) {
 		logger.info("Finding a person");
-		Person mockPerson = new Person(idTest, "Ricardo","Junior","Recife - Pernambuco - Brasil", "Male");
-		return mockPerson;
+		return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException());
+	}
+	
+	public List<Person> findAll(){
+		logger.info("finding all person");
+		return repository.findAll();
+	}
+	
+	public Person createPerson(Person person) {
+		logger.info("Creating a person");
+		return repository.save(person);
 	}
 
-	public Person newPerson(int i) {
-		Person mockPerson = new Person(Long.valueOf(i), "Person n" + i ,"LastName" + i,"City n"+i, "Male");
-		return mockPerson;
+	public Person updatePerson(Person person) {
+		logger.info("Updating a person");
+		
+		var entity = repository.findById(person.getId()).orElseThrow(() -> new ResourceNotFoundException());
+		
+		entity.setFirstName(person.getFirstName());
+		entity.setLastName(person.getLastName());
+		entity.setAddress(person.getAddress());
+		entity.setGender(person.getGender());
+		return repository.save(entity);
 	}
-
+	
+	public void deletePerson(Long id) {
+		logger.info("Deleting a person");
+		var entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException());
+		repository.delete(entity);
+	}
 }
