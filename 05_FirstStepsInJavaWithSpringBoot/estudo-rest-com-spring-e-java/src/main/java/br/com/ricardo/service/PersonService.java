@@ -20,11 +20,12 @@ public class PersonService {
 	
 	public Person findById(Long id) {
 		logger.info("Finding a person");
-		return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException());
+		return repository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException());
 	}
 	
 	public List<Person> findAll(){
-		logger.info("finding all person");
+		logger.info("Finding all person");
 		return repository.findAll();
 	}
 	
@@ -36,7 +37,8 @@ public class PersonService {
 	public Person updatePerson(Person person) {
 		logger.info("Updating a person");
 		
-		var entity = repository.findById(person.getId()).orElseThrow(() -> new ResourceNotFoundException());
+		var entity = repository.findById(person.getId())
+				.orElseThrow(() -> new ResourceNotFoundException());
 		
 		entity.setFirstName(person.getFirstName());
 		entity.setLastName(person.getLastName());
