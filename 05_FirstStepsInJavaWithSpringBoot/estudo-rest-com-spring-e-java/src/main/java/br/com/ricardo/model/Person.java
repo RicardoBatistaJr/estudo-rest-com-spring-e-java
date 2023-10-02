@@ -27,6 +27,8 @@ public class Person implements Serializable {
 	@Column(nullable = false, length = 6)
 	private String gender;
 	
+	public Person() {};
+	
 	public Person(Long id, String firstName, String lastName, String adress, String gender) {
 		super();
 		this.id = id;
