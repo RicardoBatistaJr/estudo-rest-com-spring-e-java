@@ -21,6 +21,4 @@ public class DozerMapper {
 		}
 		return destinationParsed;
 	}
-	
-
 }

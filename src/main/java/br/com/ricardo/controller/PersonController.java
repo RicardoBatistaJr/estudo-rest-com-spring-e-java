@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.ricardo.model.Person;
+import br.com.ricardo.data.dto.v1.PersonDto;
 import br.com.ricardo.service.PersonService;
 
 @RestController
@@ -25,23 +25,23 @@ public class PersonController {
 	private PersonService personService;
 	
 	@PostMapping()
-	public Person createPerson(@RequestBody Person person) {
+	public PersonDto createPerson(@RequestBody PersonDto person) {
 		return personService.createPerson(person);
 	}
 	
 	@GetMapping(value = "{id}")
-	public Person findById(
+	public PersonDto findById(
 			@PathVariable(value = "id") Long id) {
 		return personService.findById(id);
 	}
 	
 	@GetMapping()
-	public List<Person> findAll(){
+	public List<PersonDto> findAll(){
 		return personService.findAll();
 	}
 	
 	@PutMapping()
-	public Person updatePerson(@RequestBody Person person) {
+	public PersonDto updatePerson(@RequestBody PersonDto person) {
 		return personService.updatePerson(person);
 	}
 	
